@@ -26,7 +26,7 @@ jobs:
   deploy_to_heroku:
     needs: simple_deployment_pipeline #required "simple_deployment_pipeline" to completed successfully
     runs-on: ubuntu-18.04
-    if: ${{github.event_name == 'push'}}
+    if: ${{github.event_name == 'push' && !contains(join(github.event.commits.*.message, ','), '#skip')}}
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
